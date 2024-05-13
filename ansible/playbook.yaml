@@ -1,0 +1,48 @@
+---
+# file: playbook.yaml
+
+- hosts: all
+  gather_facts: false 
+  vars_files:
+    - tf_ansible_vars_file.yaml
+  tasks:
+    - name: Ping my hosts
+      ansible.builtin.ping:
+    - name: Update apt and install ca-certificates and curl
+      apt:
+        update_cache: yes
+        pkg:
+        - ca-certificates
+        - curl
+    - name: Run docker requirements
+      shell:
+        cmd: |
+          install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          chmod a+r /etc/apt/keyrings/docker.asc
+          echo \
+          "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+          $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+          sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    - name: Update apt and install docker
+      apt:
+        update_cache: yes
+        pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+    - name: Add the user 'docker' with a primary group of 'docker'
+      ansible.builtin.user:
+        name: docker
+        group: docker
+    - name: Copy docker-compose file
+      ansible.builtin.copy:
+        src: docker-compose.yml
+        dest: /docker/docker-compose.yml
+    - name: Run docker compose
+      become: true
+      become_user: docker
+      shell:
+        cmd: docker compose up -d

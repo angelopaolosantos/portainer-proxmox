@@ -1,0 +1,3 @@
+#pattern  filter=crypt diff=crypt merge=crypt
+config.pg.tfbackend filter=crypt diff=crypt merge=crypt
+terraform.tfvars filter=crypt diff=crypt merge=crypt
