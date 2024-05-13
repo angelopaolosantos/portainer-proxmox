@@ -40,9 +40,7 @@
     - name: Copy docker-compose file
       ansible.builtin.copy:
         src: docker-compose.yml
-        dest: /docker/docker-compose.yml
+        dest: /root/docker-compose.yml
     - name: Run docker compose
-      become: true
-      become_user: docker
       shell:
         cmd: docker compose up -d
