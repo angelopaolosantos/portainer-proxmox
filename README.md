@@ -8,7 +8,7 @@ terraform plan
 terraform apply
 ```
 
-## Run Ansible to install Nginx Proxy Manager
+## Run Ansible to install Proxmox
 ### Install Terraform Collection for Ansible
 ansible-galaxy collection install cloud.terraform
 
@@ -27,9 +27,5 @@ terraform state pull > terraform.tfstate
 
 ### View terraform state
 terraform show -json
-
-### Default Administrator User
-Email:    admin@example.com
-Password: changeme
 
 https://github.com/elasticdog/transcrypt
