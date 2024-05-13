@@ -44,12 +44,12 @@ resource "proxmox_virtual_environment_container" "portainer_container" {
 
   operating_system {
     template_file_id = proxmox_virtual_environment_download_file.portainer_ubuntu_24_04_standard_img.id
-    type             = "alpine"
+    type             = "ubuntu"
   }
 
   disk {
     datastore_id = "local-zfs"
-    size = 100
+    size = 25
   }
 
   cpu {
