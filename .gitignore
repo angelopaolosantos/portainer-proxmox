@@ -1,4 +1,3 @@
-.ssh/
 .terraform/
 .terraform.lock.hcl
 tf_ansible_vars_file.yaml

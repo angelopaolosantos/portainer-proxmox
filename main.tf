@@ -57,7 +57,7 @@ resource "proxmox_virtual_environment_container" "portainer_container" {
   }
 
   memory {
-    dedicated = 1024
+    dedicated = 4096
   }
 
   startup {
